@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: spring-boot-servicemonitor
+  namespace: default
+  labels:
+    release: kind-prometheus # Helm Name for Prometheus
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: spring-boot-app
+      app.kubernetes.io/name: spring-boot-helm-chart
+  endpoints:
+  - port: http
+    path: /actuator/prometheus
+    interval: 10s
